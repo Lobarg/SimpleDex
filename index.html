@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interacción con Contrato Blockchain</title>
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      color: #333;
+    }
+
+    /* Sección del contenedor principal */
+    .container {
+      max-width: 1200px;
+      width: 90%;
+      text-align: center;
+    }
+
+    h1 {
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+
+    /* Estilo para los botones */
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Estilo para las cajas de texto */
+    input[type="text"], input[type="number"], select {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      max-width: 300px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    /* Estilo para las secciones */
+    .section {
+      margin-top: 30px;
+    }
+
+    /* Estilo para las secciones visibles */
+    #contractDetailsSection {
+      display: none;
+    }
+
+    .info-box {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin: 20px 0;
+    }
+
+    .info-box p {
+      font-size: 18px;
+      color: #333;
+    }
+
+    .info-box h3 {
+      color: #007bff;
+    }
+
+    /* Estilos responsive */
+    @media (max-width: 768px) {
+      .container {
+        width: 100%;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Interacción con el Contrato Blockchain</h1>
+    <button id="connectButton" onclick="connectWallet()">Conectar con MetaMask</button>
+
+    <div id="contractDetailsSection" class="section">
+      <h2>Detalles del Contrato</h2>
+
+      <div class="info-box">
+        <h3>Dirección del Propietario:</h3>
+        <p id="owner">Cargando...</p>
+      </div>
+
+      <div class="info-box">
+        <h3>Reservas:</h3>
+        <p id="reserveA">Cargando...</p>
+        <p id="reserveB">Cargando...</p>
+      </div>
+
+      <div class="info-box">
+        <h3>Precios:</h3>
+        <p id="priceA">Cargando...</p>
+        <p id="priceB">Cargando...</p>
+      </div>
+
+      <div class="section">
+        <h2>Agregar Liquidez</h2>
+        <input type="number" id="amountA" placeholder="Cantidad de Token A">
+        <input type="number" id="amountB" placeholder="Cantidad de Token B">
+        <button onclick="addLiquidity()">Agregar Liquidez</button>
+      </div>
+
+      <div
