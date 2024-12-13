@@ -4,8 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Interacción con Contrato Blockchain</title>
+  
+  <!-- Cargar Ethers.js primero -->
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+
   <style>
-    /* Estilos generales */
     body {
       font-family: Arial, sans-serif;
       background-color: #fff;
@@ -19,19 +22,12 @@
       color: #333;
     }
 
-    /* Sección del contenedor principal */
     .container {
       max-width: 1200px;
       width: 90%;
       text-align: center;
     }
 
-    h1 {
-      color: #007bff;
-      margin-bottom: 20px;
-    }
-
-    /* Estilo para los botones */
     button {
       background-color: #007bff;
       color: white;
@@ -41,29 +37,24 @@
       cursor: pointer;
       border-radius: 5px;
       transition: background-color 0.3s;
+      margin: 10px;
     }
 
     button:hover {
       background-color: #0056b3;
     }
 
-    /* Estilo para las cajas de texto */
-    input[type="text"], input[type="number"], select {
+    input[type="text"], input[type="number"] {
       padding: 10px;
       margin: 10px 0;
       width: 100%;
       max-width: 300px;
-      background-color: #f0f0f0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
     }
 
-    /* Estilo para las secciones */
     .section {
       margin-top: 30px;
     }
 
-    /* Estilo para las secciones visibles */
     #contractDetailsSection {
       display: none;
     }
@@ -72,35 +63,21 @@
       background-color: #f8f9fa;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       margin: 20px 0;
-    }
-
-    .info-box p {
-      font-size: 18px;
-      color: #333;
-    }
-
-    .info-box h3 {
-      color: #007bff;
-    }
-
-    /* Estilos responsive */
-    @media (max-width: 768px) {
-      .container {
-        width: 100%;
-        padding: 20px;
-      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Interacción con el Contrato Blockchain</h1>
+    <h1>Interacción con Contrato Blockchain</h1>
+    
     <button id="connectButton" onclick="connectWallet()">Conectar con MetaMask</button>
-
+    
     <div id="contractDetailsSection" class="section">
-      <h2>Detalles del Contrato</h2>
+      <div class="info-box">
+        <h3>Wallet Conectada:</h3>
+        <p id="walletAddress">No conectado</p>
+      </div>
 
       <div class="info-box">
         <h3>Dirección del Propietario:</h3>
@@ -126,4 +103,29 @@
         <button onclick="addLiquidity()">Agregar Liquidez</button>
       </div>
 
-      <div
+      <div class="section">
+        <h2>Remover Liquidez</h2>
+        <input type="number" id="amountRemoveA" placeholder="Cantidad Token A a Remover">
+        <input type="number" id="amountRemoveB" placeholder="Cantidad Token B a Remover">
+        <button onclick="removeLiquidity()">Remover Liquidez</button>
+      </div>
+
+      <div class="section">
+        <h2>Intercambio de Tokens</h2>
+        <div>
+          <h3>Swap A por B</h3>
+          <input type="number" id="amountSwapAforB" placeholder="Cantidad Token A a Intercambiar">
+          <button onclick="swapTokens('AforB')">Swap A por B</button>
+        </div>
+        <div>
+          <h3>Swap B por A</h3>
+          <input type="number" id="amountSwapBforA" placeholder="Cantidad Token B a Intercambiar">
+          <button onclick="swapTokens('BforA')">Swap B por A</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
