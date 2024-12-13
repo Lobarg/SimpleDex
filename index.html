@@ -1,131 +1,90 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interacción con Contrato Blockchain</title>
-  
-  <!-- Cargar Ethers.js primero -->
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #fff;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
-      color: #333;
-    }
-
-    .container {
-      max-width: 1200px;
-      width: 90%;
-      text-align: center;
-    }
-
-    button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-      margin: 10px;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    input[type="text"], input[type="number"] {
-      padding: 10px;
-      margin: 10px 0;
-      width: 100%;
-      max-width: 300px;
-    }
-
-    .section {
-      margin-top: 30px;
-    }
-
-    #contractDetailsSection {
-      display: none;
-    }
-
-    .info-box {
-      background-color: #f8f9fa;
-      padding: 20px;
-      border-radius: 10px;
-      margin: 20px 0;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpleDex - Intercambio de Tokens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Interacción con Contrato Blockchain</h1>
-    
-    <button id="connectButton" onclick="connectWallet()">Conectar con MetaMask</button>
-    
-    <div id="contractDetailsSection" class="section">
-      <div class="info-box">
-        <h3>Wallet Conectada:</h3>
-        <p id="walletAddress">No conectado</p>
-      </div>
+    <div class="container">
+        <header>
+            <h1>SimpleDex</h1>
+            <div class="wallet-connection">
+                <button id="connectButton" class="btn-primary">Conectar Wallet</button>
+                <p id="walletAddress" class="wallet-address">No conectado</p>
+            </div>
+        </header>
 
-      <div class="info-box">
-        <h3>Dirección del Propietario:</h3>
-        <p id="owner">Cargando...</p>
-      </div>
+        <main id="contractInterface" style="display: none;">
+            <div class="grid-container">
+                <div class="column liquidity-section">
+                    <h2>Agregar/Retirar Liquidez</h2>
+                    
+                    <div class="input-group">
+                        <h3>Agregar Liquidez</h3>
+                        <label>Token A Cantidad:</label>
+                        <input type="number" id="addLiquidityAmountA" placeholder="Cantidad Token A">
+                        
+                        <label>Token B Cantidad:</label>
+                        <input type="number" id="addLiquidityAmountB" placeholder="Cantidad Token B">
+                        
+                        <button id="addLiquidityBtn" class="btn-action">Agregar Liquidez</button>
+                    </div>
 
-      <div class="info-box">
-        <h3>Reservas:</h3>
-        <p id="reserveA">Cargando...</p>
-        <p id="reserveB">Cargando...</p>
-      </div>
+                    <div class="input-group">
+                        <h3>Retirar Liquidez</h3>
+                        <label>Token A Retirar:</label>
+                        <input type="number" id="removeLiquidityAmountA" placeholder="Cantidad Token A">
+                        
+                        <label>Token B Retirar:</label>
+                        <input type="number" id="removeLiquidityAmountB" placeholder="Cantidad Token B">
+                        
+                        <button id="removeLiquidityBtn" class="btn-action">Retirar Liquidez</button>
+                    </div>
+                </div>
 
-      <div class="info-box">
-        <h3>Precios:</h3>
-        <p id="priceA">Cargando...</p>
-        <p id="priceB">Cargando...</p>
-      </div>
+                <div class="column swap-section">
+                    <h2>Intercambio de Tokens</h2>
+                    
+                    <div class="input-group">
+                        <h3>Swap Token A → Token B</h3>
+                        <label>Token A Cantidad:</label>
+                        <input type="number" id="swapAmountA" placeholder="Cantidad Token A">
+                        <button id="swapAforBBtn" class="btn-action">Swap A → B</button>
+                    </div>
 
-      <div class="section">
-        <h2>Agregar Liquidez</h2>
-        <input type="number" id="amountA" placeholder="Cantidad de Token A">
-        <input type="number" id="amountB" placeholder="Cantidad de Token B">
-        <button onclick="addLiquidity()">Agregar Liquidez</button>
-      </div>
+                    <div class="input-group">
+                        <h3>Swap Token B → Token A</h3>
+                        <label>Token B Cantidad:</label>
+                        <input type="number" id="swapAmountB" placeholder="Cantidad Token B">
+                        <button id="swapBforABtn" class="btn-action">Swap B → A</button>
+                    </div>
 
-      <div class="section">
-        <h2>Remover Liquidez</h2>
-        <input type="number" id="amountRemoveA" placeholder="Cantidad Token A a Remover">
-        <input type="number" id="amountRemoveB" placeholder="Cantidad Token B a Remover">
-        <button onclick="removeLiquidity()">Remover Liquidez</button>
-      </div>
+                    <div class="token-info">
+                        <h3>Información de Tokens</h3>
+                        <p id="priceA">Precio Token A: -</p>
+                        <p id="priceB">Precio Token B: -</p>
+                        <p id="reserveA">Reserva Token A: -</p>
+                        <p id="reserveB">Reserva Token B: -</p>
+                        <div class="update-buttons">
+                            <button id="updatePricesBtn" class="btn-secondary">Actualizar Precios</button>
+                            <button id="updateReservesBtn" class="btn-secondary">Actualizar Reservas</button>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="section">
-        <h2>Intercambio de Tokens</h2>
-        <div>
-          <h3>Swap A por B</h3>
-          <input type="number" id="amountSwapAforB" placeholder="Cantidad Token A a Intercambiar">
-          <button onclick="swapTokens('AforB')">Swap A por B</button>
-        </div>
-        <div>
-          <h3>Swap B por A</h3>
-          <input type="number" id="amountSwapBforA" placeholder="Cantidad Token B a Intercambiar">
-          <button onclick="swapTokens('BforA')">Swap B por A</button>
-        </div>
-      </div>
+                <div class="column events-section">
+                    <h2>Eventos Recientes</h2>
+                    <div id="eventResults" class="event-list"></div>
+                    <button id="fetchEventsBtn" class="btn-action">Cargar Eventos</button>
+                </div>
+            </div>
+        </main>
     </div>
-  </div>
 
-  <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
