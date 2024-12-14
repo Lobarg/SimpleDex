@@ -8,10 +8,10 @@ Se realizaron los cambios solicitados por Cristian, mejorando el uso de GAS y me
 Además se cambio la logica para que maneje wei, no enteros en el contrato, si bien a efectos practicos, en la pagina web realizada se utilizan numeros con decimales (punto) para manejarlo mas comodamente.  Se diferencio tambien el evento Swap AxB de BxA a pedido de Cristian, si bien de esta forma se usa mas recursos. Se agrego una funcion para retornar las reservas en el contrato.
 
 Frontend
-El frontend es una aplicación web simple que permite a los usuarios interactuar con el contrato inteligente a través de su navegador. es HTML y Javascript (Vanilla).  Este frontend incluye las siguientes funcionalidades:
-
+El frontend es una aplicación web simple que permite a los usuarios interactuar con el contrato inteligente a través de su navegador. es HTML y Javascript (Vanilla).  
 Se agrega ademas, la pagina web en Vercel que se conecta a todos los cambios en este github: https://simpledex-zeta.vercel.app/
 
+Este frontend incluye las siguientes funcionalidades:
 Conexión a MetaMask: Los usuarios pueden conectar su billetera de MetaMask a la aplicación para interactuar con el contrato.
 Interacción con el contrato: Desde el frontend, los usuarios pueden:
 Ver las reservas actuales de los tokens A y B.
@@ -31,9 +31,7 @@ bash
 Copiar código
 git clone https://github.com/tu_usuario/simple-dex.git
 cd simple-dex
-Contratos: Para desplegar los contratos en la red Ethereum (por ejemplo, en la red de pruebas Rinkeby), debes compilar y desplegar los contratos con herramientas como Hardhat o Truffle.
-
-Frontend: Para ejecutar el frontend, simplemente abre el archivo index.html en tu navegador o sube los archivos a una plataforma como GitHub Pages, Netlify o Vercel.
+Contratos: Para desplegar los contratos en la red Ethereum (por ejemplo, en la red de pruebas Rinkeby), debes compilar y desplegar los contratos con herramientas como remix o Hardhat.
 
 Interacción: Asegúrate de que tu billetera MetaMask esté conectada a la red correcta antes de intentar interactuar con el contrato. Si no eres el owner del contrato y no tienes tokens A y B no podras interactuar, salvo para las consultas. 
 
@@ -41,9 +39,6 @@ Requisitos
 MetaMask instalado en tu navegador.
 Conexión a una red Ethereum compatible (por ejemplo, Rinkeby para pruebas).
 Una cuenta de Ethereum con fondos para pagar las tarifas de transacción si interactúas con la red principal.
-Recursos adicionales
-Documentación de ethers.js
-Documentación de MetaMask
-Documentación de Solidity
+
 Contribuciones
 Si tienes sugerencias o mejoras para este proyecto, por favor abre un issue o envía un pull request. ¡Las contribuciones son bienvenidas!
