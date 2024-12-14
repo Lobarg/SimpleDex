@@ -204,6 +204,67 @@ async function updatePricesAndReserves() {
     }
 }
 
+// Función para obtener eventos
+async function getLastEvents() {
+    if (!checkWalletConnection()) return;
+    
+    try {
+        // Obtener últimos bloques para filtrar eventos
+        const currentBlock = await provider.getBlockNumber();
+        const fromBlock = currentBlock - 10000; // Buscar en los últimos 10000 bloques
+
+        // Filtros para cada tipo de evento
+        const liquidityAddedFilter = dexContract.filters.LiquidityAdded();
+        const liquidityRemovedFilter = dexContract.filters.LiquidityRemoved();
+        const swapAforBFilter = dexContract.filters.TokenSwappedAforB();
+        const swapBforAFilter = dexContract.filters.TokenSwappedBforA();
+
+        // Obtener eventos
+        const [addedEvents, removedEvents, swapsAB, swapsBA] = await Promise.all([
+            dexContract.queryFilter(liquidityAddedFilter, fromBlock),
+            dexContract.queryFilter(liquidityRemovedFilter, fromBlock),
+            dexContract.queryFilter(swapAforBFilter, fromBlock),
+            dexContract.queryFilter(swapBforAFilter, fromBlock)
+        ]);
+
+        // Combinar y ordenar eventos
+        const allEvents = [...addedEvents, ...removedEvents, ...swapsAB, ...swapsBA]
+            .sort((a, b) => b.blockNumber - a.blockNumber)
+            .slice(0, 4);
+
+        // Mostrar en UI
+        const eventLog = document.getElementById('eventLog');
+        eventLog.innerHTML = '';
+        
+        for (const event of allEvents) {
+            const eventType = event.event;
+            const values = event.args;
+            let message = '';
+
+            switch(eventType) {
+                case 'LiquidityAdded':
+                    message = `Liquidez Agregada: ${ethers.utils.formatUnits(values.amountA, 18)} Token A y ${ethers.utils.formatUnits(values.amountB, 18)} Token B`;
+                    break;
+                case 'LiquidityRemoved':
+                    message = `Liquidez Retirada: ${ethers.utils.formatUnits(values.amountA, 18)} Token A y ${ethers.utils.formatUnits(values.amountB, 18)} Token B`;
+                    break;
+                case 'TokenSwappedAforB':
+                    message = `Swap A→B: ${ethers.utils.formatUnits(values.inputAmount, 18)} Token A por ${ethers.utils.formatUnits(values.outputAmount, 18)} Token B`;
+                    break;
+                case 'TokenSwappedBforA':
+                    message = `Swap B→A: ${ethers.utils.formatUnits(values.inputAmount, 18)} Token B por ${ethers.utils.formatUnits(values.outputAmount, 18)} Token A`;
+                    break;
+            }
+            
+            eventLog.innerHTML += `<div>${message}</div>`;
+        }
+    } catch (error) {
+        console.error("Error al obtener eventos:", error);
+        document.getElementById('eventLog').innerHTML = 'Error al cargar eventos';
+    }
+}
+
+
 script.onload = () => {
     document.getElementById('connectWalletBtn').addEventListener('click', connectWallet);
     document.getElementById('addLiquidityBtn').addEventListener('click', addLiquidity);
@@ -211,4 +272,5 @@ script.onload = () => {
     document.getElementById('swapAforBBtn').addEventListener('click', swapAforB);
     document.getElementById('swapBforABtn').addEventListener('click', swapBforA);
     document.getElementById('getReservesBtn').addEventListener('click', updatePricesAndReserves);
+    document.getElementById('getLastEventsBtn').addEventListener('click', getLastEvents);
 };
