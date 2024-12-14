@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpleDex - Intercambio de Tokens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SimpleDex</h1>
+            <div class="wallet-connection">
+                <button id="connectButton" class="btn-primary">Conectar Wallet</button>
+                <p id="walletAddress" class="wallet-address">No conectado</p>
+            </div>
+        </header>
+
+        <main id="contractInterface" style="display: none;">
+            <div class="grid-container">
+                <div class="column liquidity-section">
+                    <h2>Agregar/Retirar Liquidez</h2>
+                    
+                    <div class="input-group">
+                        <h3>Agregar Liquidez</h3>
+                        <label>Token A Cantidad:</label>
+                        <input type="number" id="addLiquidityAmountA" placeholder="Cantidad Token A">
+                        
+                        <label>Token B Cantidad:</label>
+                        <input type="number" id="addLiquidityAmountB" placeholder="Cantidad Token B">
+                        
+                        <button id="addLiquidityBtn" class="btn-action">Agregar Liquidez</button>
+                    </div>
+
+                    <div class="input-group">
+                        <h3>Retirar Liquidez</h3>
+                        <label>Token A Retirar:</label>
+                        <input type="number" id="removeLiquidityAmountA" placeholder="Cantidad Token A">
+                        
+                        <label>Token B Retirar:</label>
+                        <input type="number" id="removeLiquidityAmountB" placeholder="Cantidad Token B">
+                        
+                        <button id="removeLiquidityBtn" class="btn-action">Retirar Liquidez</button>
+                    </div>
+                </div>
+
+                <div class="column swap-section">
+                    <h2>Intercambio de Tokens</h2>
+                    
+                    <div class="input-group">
+                        <h3>Swap Token A → Token B</h3>
+                        <label>Token A Cantidad:</label>
+                        <input type="number" id="swapAmountA" placeholder="Cantidad Token A">
+                        <button id="swapAforBBtn" class="btn-action">Swap A → B</button>
+                    </div>
+
+                    <div class="input-group">
+                        <h3>Swap Token B → Token A</h3>
+                        <label>Token B Cantidad:</label>
+                        <input type="number" id="swapAmountB" placeholder="Cantidad Token B">
+                        <button id="swapBforABtn" class="btn-action">Swap B → A</button>
+                    </div>
+
+                    <div class="token-info">
+                        <h3>Información de Tokens</h3>
+                        <p id="priceA">Precio Token A: -</p>
+                        <p id="priceB">Precio Token B: -</p>
+                        <p id="reserveA">Reserva Token A: -</p>
+                        <p id="reserveB">Reserva Token B: -</p>
+                        <div class="update-buttons">
+                            <button id="updatePricesBtn" class="btn-secondary">Actualizar Precios</button>
+                            <button id="updateReservesBtn" class="btn-secondary">Actualizar Reservas</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column events-section">
+                    <h2>Eventos Recientes</h2>
+                    <div id="eventResults" class="event-list"></div>
+                    <button id="fetchEventsBtn" class="btn-action">Cargar Eventos</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
