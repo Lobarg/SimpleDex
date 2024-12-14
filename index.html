@@ -7,81 +7,56 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>SimpleDex</h1>
-            <div class="wallet-connection">
-                <button id="connectButton" class="btn-primary">Conectar Wallet</button>
-                <p id="walletAddress" class="wallet-address">No conectado</p>
-            </div>
-        </header>
+    <header>
+        <h1>SimpleDEX</h1>
+        <p>By Adriana Cruz</p>
+        <button id="connectWalletBtn">Conectar Billetera</button>
+    </header>
+    <script src="script.js" defer></script>
+    <main>
+        
+        <div class="row">
+            <section class="column">
+                <h2>Gestión de Liquidez</h2>
+                <h3>Agregar Liquidez</h3>
+                <input type="text" id="amountA" placeholder="Cantidad Token A">
+                <input type="text" id="amountB" placeholder="Cantidad Token B">
+                <button id="addLiquidityBtn">Agregar Liquidez</button>
+                
+                <h3>Retirar Liquidez</h3>
+                <input type="text" id="amountARemove" placeholder="Cantidad Token A">
+                <input type="text" id="amountBRemove" placeholder="Cantidad Token B">
+                <button id="removeLiquidityBtn">Retirar Liquidez</button>
+            </section>
 
-        <main id="contractInterface" style="display: none;">
-            <div class="grid-container">
-                <div class="column liquidity-section">
-                    <h2>Agregar/Retirar Liquidez</h2>
-                    
-                    <div class="input-group">
-                        <h3>Agregar Liquidez</h3>
-                        <label>Token A Cantidad:</label>
-                        <input type="number" id="addLiquidityAmountA" placeholder="Cantidad Token A">
-                        
-                        <label>Token B Cantidad:</label>
-                        <input type="number" id="addLiquidityAmountB" placeholder="Cantidad Token B">
-                        
-                        <button id="addLiquidityBtn" class="btn-action">Agregar Liquidez</button>
-                    </div>
+            <section class="column">
+                <h2>Intercambios y Eventos</h2>
+                <h3>Intercambios</h3>
+                <input type="text" id="amountASwap" placeholder="Token A a intercambiar">
+                <button id="swapAforBBtn">Swap A por B</button>
+                <input type="text" id="amountBSwap" placeholder="Token B a intercambiar">
+                <button id="swapBforABtn">Swap B por A</button>
+                
+                <h3>Eventos del Contrato</h3>
+                <button id="getLastEventsBtn">Últimos Eventos</button>
+                <div id="eventLog"></div>
+            </section>
 
-                    <div class="input-group">
-                        <h3>Retirar Liquidez</h3>
-                        <label>Token A Retirar:</label>
-                        <input type="number" id="removeLiquidityAmountA" placeholder="Cantidad Token A">
-                        
-                        <label>Token B Retirar:</label>
-                        <input type="number" id="removeLiquidityAmountB" placeholder="Cantidad Token B">
-                        
-                        <button id="removeLiquidityBtn" class="btn-action">Retirar Liquidez</button>
-                    </div>
-                </div>
-
-                <div class="column swap-section">
-                    <h2>Intercambio de Tokens</h2>
-                    
-                    <div class="input-group">
-                        <h3>Swap Token A → Token B</h3>
-                        <label>Token A Cantidad:</label>
-                        <input type="number" id="swapAmountA" placeholder="Cantidad Token A">
-                        <button id="swapAforBBtn" class="btn-action">Swap A → B</button>
-                    </div>
-
-                    <div class="input-group">
-                        <h3>Swap Token B → Token A</h3>
-                        <label>Token B Cantidad:</label>
-                        <input type="number" id="swapAmountB" placeholder="Cantidad Token B">
-                        <button id="swapBforABtn" class="btn-action">Swap B → A</button>
-                    </div>
-
-                    <div class="token-info">
-                        <h3>Información de Tokens</h3>
-                        <p id="priceA">Precio Token A: -</p>
-                        <p id="priceB">Precio Token B: -</p>
-                        <p id="reserveA">Reserva Token A: -</p>
-                        <p id="reserveB">Reserva Token B: -</p>
-                        <div class="update-buttons">
-                            <button id="updatePricesBtn" class="btn-secondary">Actualizar Precios</button>
-                            <button id="updateReservesBtn" class="btn-secondary">Actualizar Reservas</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="column events-section">
-                    <h2>Eventos Recientes</h2>
-                    <div id="eventResults" class="event-list"></div>
-                    <button id="fetchEventsBtn" class="btn-action">Cargar Eventos</button>
-                </div>
-            </div>
-        </main>
-    </div>
+            <section class="column">
+                <h2>Reservas y Precios</h2>
+                <h3>Reservas</h3>
+                <p id="reserveA">Reserva Token A: --</p>
+                <p id="reserveB">Reserva Token B: --</p>
+                <button id="getReservesBtn">Actualizar Reservas</button>
+                
+                <h3>Precios</h3>
+                <p id="priceA">Precio Token A: --</p>
+                <p id="priceB">Precio Token B: --</p>
+                <button id="getPriceABtn">Actualizar Precio A</button>
+                <button id="getPriceBBtn">Actualizar Precio B</button>
+            </section>
+        </div>
+    </main>
 
 </body>
 </html>
